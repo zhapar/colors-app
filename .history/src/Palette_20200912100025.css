@@ -1,0 +1,18 @@
+.Palette {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.Palette-colors {
+  height: 90%;
+}
+
+.Palette-footer {
+  background-color: #ffffff;
+  height: 5vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

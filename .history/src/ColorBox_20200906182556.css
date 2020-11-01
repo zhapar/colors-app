@@ -1,0 +1,18 @@
+.ColorBox {
+  width: 20%;
+  height: 25%;
+  display: inline-block;
+  margin: 0 auto;
+  position: relative;
+  cursor: pointer;
+}
+
+.copy-button {
+  width: 100px;
+  height: 30px;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  margin-top: -15px;
+  margin-left: -50px;
+}
