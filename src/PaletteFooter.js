@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/styles";
 import styles from "./styles/PaletteFooterStyles";
 
-function PaletteFooter(props) {
-  const { paletteName, emoji, classes } = props;
+function PaletteFooter({ paletteName, emoji, classes }) {
   return (
     <footer className={classes.PaletteFooter}>
-      <Link to="/">
+      <Link to='/'>
         {paletteName}
         <span className={classes.emoji}>{emoji}</span>
       </Link>

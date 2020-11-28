@@ -1,53 +1,59 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
+
+import { generatePalette } from "./colorHelpers";
 import ColorBox from "./ColorBox";
 import Navbar from "./Navbar";
 import PaletteFooter from "./PaletteFooter";
 import { withStyles } from "@material-ui/styles";
 import styles from "./styles/PaletteStyles";
 
-class Palette extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { level: 500, format: "hex" };
-    this.changeLevel = this.changeLevel.bind(this);
-    this.changeFormat = this.changeFormat.bind(this);
-  }
+function Palette({ palettes, classes }) {
+  const [state, setState] = useState({ level: 500, format: "hex" });
 
-  changeLevel(level) {
-    this.setState({ level });
-  }
+  const { id } = useParams();
 
-  changeFormat(val) {
-    this.setState({ format: val });
-  }
+  const changeLevel = (level) => {
+    setState({ ...state, level });
+  };
 
-  render() {
-    const { colors, paletteName, emoji, id } = this.props.palette;
-    const { classes } = this.props;
-    const { level, format } = this.state;
+  const changeFormat = (val) => {
+    setState({ ...state, format: val });
+  };
 
-    const colorBoxes = colors[level].map((color) => (
-      <ColorBox
-        background={color[format]}
-        name={color.name}
-        key={color.id}
-        moreUrl={`/palette/${id}/${color.id}`}
-        showingFullPalette
+  const palette = generatePalette(
+    palettes.find((palette) => palette.id === id)
+  );
+
+  const { colors, paletteName, emoji } = palette;
+  const { level, format } = state;
+
+  const colorBoxes = colors[level].map((color) => (
+    <ColorBox
+      background={color[format]}
+      name={color.name}
+      key={color.id}
+      moreUrl={`/palette/${id}/${color.id}`}
+      showingFullPalette
+    />
+  ));
+  return (
+    <div className={classes.Palette}>
+      <Navbar
+        level={level}
+        changeLevel={changeLevel}
+        handleChange={changeFormat}
+        showingAllColors
       />
-    ));
-    return (
-      <div className={classes.Palette}>
-        <Navbar
-          level={level}
-          changeLevel={this.changeLevel}
-          handleChange={this.changeFormat}
-          showingAllColors
-        />
-        <div className={classes.colors}> {colorBoxes} </div>
-        <PaletteFooter paletteName={paletteName} emoji={emoji} />
-      </div>
-    );
-  }
+      <div className={classes.colors}> {colorBoxes} </div>
+      <PaletteFooter paletteName={paletteName} emoji={emoji} />
+    </div>
+  );
 }
 
-export default withStyles(styles)(Palette);
+const mapStateToProps = ({ palettes }) => ({
+  palettes,
+});
+
+export default connect(mapStateToProps)(withStyles(styles)(Palette));

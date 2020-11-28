@@ -2,7 +2,7 @@ import sizes from "./sizes";
 
 export default {
   Palette: {
-    height: "100%",
+    height: "100vh",
     overflow: "hidden",
     display: "flex",
     flexDirection: "column",

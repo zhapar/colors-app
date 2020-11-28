@@ -5,6 +5,7 @@ const drawerWidth = DRAWER_WIDTH;
 const styles = (theme) => ({
   root: {
     display: "flex",
+    height: "100vh",
   },
   drawer: {
     width: drawerWidth,
@@ -57,6 +58,7 @@ const styles = (theme) => ({
   },
   button: {
     width: "50%",
+    fontSize: "12px",
   },
 });
 

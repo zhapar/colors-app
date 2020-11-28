@@ -1,36 +1,21 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles/Page.css";
 
-class Page extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      height: window.innerHeight,
-    };
-    this.setHeight = this.setHeight.bind(this);
-  }
+function Page({ children }) {
+  const [height, setHeight] = useState(window.innerHeight);
 
-  componentDidMount() {
+  useEffect(() => {
     window.addEventListener("resize", () => {
       // We execute the same script as before
-      this.setHeight();
+      setHeight(window.innerHeight);
     });
-  }
+  }, []);
 
-  setHeight() {
-    this.setState({ height: window.innerHeight });
-  }
-
-  render() {
-    const { children } = this.props;
-    const { height } = this.state;
-
-    return (
-      <section className="page" style={{ height: height }}>
-        {children}
-      </section>
-    );
-  }
+  return (
+    <section className='page' style={{ height: height }}>
+      {children}
+    </section>
+  );
 }
 
 export default Page;

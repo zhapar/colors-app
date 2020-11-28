@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -12,87 +12,77 @@ import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import PaletteMetaForm from "./PaletteMetaForm";
 import styles from "./styles/PaletteFormNavStyles";
 
-class PaletteFormNav extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showForm: false,
-    };
-    this.showForm = this.showForm.bind(this);
-    this.hideForm = this.hideForm.bind(this);
-  }
+function PaletteFormNav({
+  classes,
+  open,
+  handleSubmit,
+  handleDrawerOpen,
+  palettes,
+}) {
+  const [showForm, setShowForm] = useState(false);
 
-  showForm() {
-    this.setState({ showForm: true });
-  }
-  hideForm() {
-    this.setState({ showForm: false });
-  }
-  render() {
-    const {
-      classes,
-      open,
-      handleSubmit,
-      handleDrawerOpen,
-      palettes,
-    } = this.props;
-    const { showForm } = this.state;
-    return (
-      <div className={classes.root}>
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          color="default"
-          className={clsx(classes.appBar, {
-            [classes.appBarShift]: open,
-          })}
-        >
-          <Toolbar className={classes.navTitles}>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              className={clsx(classes.menuButton, {
-                [classes.hide]: open,
-              })}
-            >
-              <AddToPhotosIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap>
-              Create A Palette
-            </Typography>
-          </Toolbar>
-          <div className={classes.navBtns}>
-            <Link to="/">
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.button}
-              >
-                Back
-              </Button>
-            </Link>
+  const showFormHandler = () => {
+    setShowForm(true);
+  };
+
+  const hideFormHandler = () => {
+    setShowForm(false);
+  };
+
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar
+        position='fixed'
+        color='default'
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
+        <Toolbar className={classes.navTitles}>
+          <IconButton
+            color='inherit'
+            aria-label='open drawer'
+            onClick={handleDrawerOpen}
+            edge='start'
+            className={clsx(classes.menuButton, {
+              [classes.hide]: open,
+            })}
+          >
+            <AddToPhotosIcon />
+          </IconButton>
+          <Typography variant='h6' noWrap>
+            Create A Palette
+          </Typography>
+        </Toolbar>
+        <div className={classes.navBtns}>
+          <Link to='/'>
             <Button
-              variant="contained"
-              color="primary"
-              onClick={this.showForm}
+              variant='contained'
+              color='secondary'
               className={classes.button}
             >
-              Save
+              Back
             </Button>
-          </div>
-        </AppBar>
-        {showForm && (
-          <PaletteMetaForm
-            handleSubmit={handleSubmit}
-            palettes={palettes}
-            hideForm={this.hideForm}
-          />
-        )}
-      </div>
-    );
-  }
+          </Link>
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={showFormHandler}
+            className={classes.button}
+          >
+            Save
+          </Button>
+        </div>
+      </AppBar>
+      {showForm && (
+        <PaletteMetaForm
+          handleSubmit={handleSubmit}
+          hideForm={hideFormHandler}
+        />
+      )}
+    </div>
+  );
 }
 
 export default withStyles(styles, { withTheme: true })(PaletteFormNav);
