@@ -16,16 +16,16 @@ function ColorPickerForm({ addNewColor, isPaletteFull, classes, colors }) {
       colors.every(({ name }) => name.toLowerCase() !== value.toLowerCase())
     );
     ValidatorForm.addValidationRule("isColorUnique", (value) =>
-      colors.every(({ color }) => color !== this.state.currentColor)
+      colors.every(({ color }) => color !== state.currentColor)
     );
-  }, []);
+  });
 
   const handleChange = (e) => {
-    setState({ [e.target.name]: e.target.value });
+    setState({ ...state, [e.target.name]: e.target.value });
   };
 
   const updateCurrentColor = (newColor) => {
-    setState({ currentColor: newColor.hex });
+    setState({ ...state, currentColor: newColor.hex });
   };
 
   const handleSubmit = () => {
@@ -34,7 +34,7 @@ function ColorPickerForm({ addNewColor, isPaletteFull, classes, colors }) {
       color: state.currentColor,
     };
     addNewColor(newColor);
-    setState({ newColorName: "" });
+    setState({ ...state, newColorName: "" });
   };
 
   const { currentColor, newColorName } = state;
