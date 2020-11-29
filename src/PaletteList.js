@@ -50,7 +50,7 @@ function PaletteList({ palettes, classes, deletePalette }) {
       <div className={classes.container}>
         <nav className={classes.nav}>
           <h1 className={classes.title}>Color Palettes</h1>
-          <Link to='/palette/new'>Create Palette</Link>
+          <Link to='/palette/new'>create palette</Link>
         </nav>
         <TransitionGroup className={classes.palettes}>
           {palettes.map((palette) => (
